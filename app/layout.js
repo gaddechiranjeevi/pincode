@@ -1,6 +1,9 @@
 import "./globals.css";
 
 export const metadata = {
+   verification: {
+    google: "DUaeSaZ75y6ZgvySA6UQDJveRQoC8Cs4wWejBkzLdoA",
+  },
   title: "India Pincode Search",
   description: "Search Indian pincodes by post office, district or state"
 };
