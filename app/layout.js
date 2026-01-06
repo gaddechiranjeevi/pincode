@@ -5,8 +5,9 @@ export const metadata = {
     google: "DUaeSaZ75y6ZgvySA6UQDJveRQoC8Cs4wWejBkzLdoA",
   },
   other : {
-     "google-adsense-account" :"ca-pub-8505787671532796">
+     "google-adsense-account" :"ca-pub-8505787671532796",
   },
+
   title: "India Pincode Search",
   description: "Search Indian pincodes by post office, district or state"
 };
