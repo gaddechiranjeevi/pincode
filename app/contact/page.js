@@ -13,7 +13,7 @@ export default function ContactPage() {
       </p>
 
       <p>
-        <strong>Email:</strong> support@pincodesearch.in
+        <strong>Email:</strong> gaddechiru@gmail.com
       </p>
     </div>
   );
