@@ -7,7 +7,7 @@ export async function generateMetadata({ params }) {
   const { code } = await params;
 
   return {
-    title: `Pincode ${code} Details`,
+    title: `${code} Pincode - Post Office, Area, District & State Details`,
     description: `Find post office, district and state details for pincode ${code}`
   };
 }

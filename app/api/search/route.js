@@ -26,7 +26,6 @@ export async function GET(req) {
         results.push({
           pincode: pincodeKey,
           office: po.office,
-          taluk: po.taluk,
           district: po.district,
           state: po.state
         });
@@ -39,18 +38,16 @@ export async function GET(req) {
       const office = po.office.toLowerCase();
       const district = po.district.toLowerCase();
       const state = po.state.toLowerCase();
-      const taluk = po.taluk.toLowerCase();
+      
 
       if (
         office.includes(query) ||
         district.includes(query) ||
-        state.includes(query) ||
-        taluk.includes(query)
+        state.includes(query)
       ) {
         results.push({
           pincode: pincodeKey,
           office: po.office,
-          taluk: po.taluk,
           district: po.district,
           state: po.state
         });

@@ -4,8 +4,8 @@ export const metadata = {
   verification: {
     google: "DUaeSaZ75y6ZgvySA6UQDJveRQoC8Cs4wWejBkzLdoA",
   },
-  title: "India Pincode Search",
-  description: "Search Indian pincodes by post office, district or state",
+  title: "What Is My Pincode? | Find Indian PIN Codes by Area, District & State",
+  description: "Find your Indian PIN code instantly. Search by pincode, post office, district or state. Accurate India pincode directory with 1+ lakh locations.",
 };
 
 export default function RootLayout({ children }) {
