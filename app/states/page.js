@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
+import {formatDisplay} from "../lib/format";
 
 export const metadata = {
   title: "States – Indian Pincode Directory",
@@ -17,7 +18,7 @@ export default function StatesPage() {
   const states = [
     ...new Set(
       allData.flatMap(item =>
-        item.postOffices.map(po => po.state)
+        item.postOffices.map(po => formatDisplay(po.state))
       )
     )
   ].sort();
@@ -31,9 +32,9 @@ export default function StatesPage() {
           <div className="result-card" key={state}>
             <Link
               className="result-pincode"
-              href={`/state/${state.toLowerCase().replace(/\s+/g, "-")}`}
+              href={`/state/${formatDisplay(state).toLowerCase().replace(/\s+/g, "-")}`}
             >
-              {state}
+              {formatDisplay(state)}
             </Link>
           </div>
         ))}

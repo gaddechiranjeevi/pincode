@@ -1,62 +1,47 @@
+import { getPincode } from "../../lib/dataStore";
 import fs from "fs";
 import path from "path";
 
-export async function GET(req) {
-  const { searchParams } = new URL(req.url);
-  const q = searchParams.get("q");
+let SEARCH_INDEX = null;
 
-  // 🔹 Do NOT show anything before search
+function loadSearchIndex() {
+  if (!SEARCH_INDEX) {
+    SEARCH_INDEX = JSON.parse(
+      fs.readFileSync(
+        path.join(process.cwd(), "data", "search-index.json"),
+        "utf8"
+      )
+    );
+  }
+}
+
+export async function GET(req) {
+  const q = new URL(req.url).searchParams.get("q");
+
   if (!q || q.trim().length < 2) {
     return Response.json([]);
   }
 
   const query = q.trim().toLowerCase();
+  loadSearchIndex();
 
-  const filePath = path.join(process.cwd(), "data", "pincodes.json");
-  const data = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+  const results = new Set();
 
-  const results = [];
-
-  for (const pincodeKey in data) {
-    const entry = data[pincodeKey];
-
-    // 1️⃣ Match pincode directly
-    if (pincodeKey.includes(query)) {
-      for (const po of entry.postOffices) {
-        results.push({
-          pincode: pincodeKey,
-          office: po.office,
-          district: po.district,
-          state: po.state
-        });
-      }
-      continue;
-    }
-
-    // 2️⃣ Match inside post offices
-    for (const po of entry.postOffices) {
-      const office = po.office.toLowerCase();
-      const district = po.district.toLowerCase();
-      const state = po.state.toLowerCase();
-      
-
-      if (
-        office.includes(query) ||
-        district.includes(query) ||
-        state.includes(query)
-      ) {
-        results.push({
-          pincode: pincodeKey,
-          office: po.office,
-          district: po.district,
-          state: po.state
-        });
-      }
-    }
-
-    // safety limit
-    if (results.length >= 200) break;
+  // ✅ 1. Exact pincode
+  if (/^\d{6}$/.test(query)) {
+    const data = getPincode(query);
+    if (data) results.add(query);
   }
 
-  return Response.json(results);
+  // ✅ 2. Exact keyword ONLY (NO partial matching)
+  if (SEARCH_INDEX[query]) {
+    SEARCH_INDEX[query].forEach((p) => results.add(p));
+  }
+
+  const finalResults = Array.from(results)
+    .slice(0, 20)
+    .map((code) => getPincode(code))
+    .filter(Boolean);
+
+  return Response.json(finalResults);
 }

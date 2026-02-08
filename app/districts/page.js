@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
+import {formatDisplay} from "../lib/format";
 
 export default function DistrictsPage() {
   const filePath = path.join(process.cwd(), "data", "pincodes.json");
@@ -11,7 +12,7 @@ export default function DistrictsPage() {
 
   Object.values(data).forEach(item => {
     item.postOffices.forEach(po => {
-      districts.add(`${po.district}|||${po.state}`);
+      districts.add(`${formatDisplay(po.district)}|||${formatDisplay(po.state)}`);
     });
   });
 
@@ -28,10 +29,10 @@ export default function DistrictsPage() {
             <Link
               key={i}
               className="result-card"
-              href={`/state/${state.toLowerCase().replace(/\s+/g,"-")}/district/${district.toLowerCase().replace(/\s+/g,"-")}`}
+              href={`/state/${formatDisplay(state).toLowerCase().replace(/\s+/g,"-")}/district/${formatDisplay(district).toLowerCase().replace(/\s+/g,"-")}`}
             >
-              <strong>{district}</strong>
-              <p>{state}</p>
+              <strong>{formatDisplay(district)}</strong>
+              <p>{formatDisplay(state)}</p>
             </Link>
           );
         })}

@@ -10,10 +10,13 @@ export default function HomeSearch() {
 
   async function handleSearch() {
     if (!query) return;
-
     setSearched(true);
+    console.log("QUERY:", query);
     const res = await fetch(`/api/search?q=${query}`);
+    console.log("RESPONSE STATUS:", res.status);
     const data = await res.json();
+    console.log("SEARCH DATA:", data);
+  
 
     setResults(data);
   }

@@ -33,5 +33,6 @@ function formatState(state) {
     .replace(/\b\w/g, c => c.toUpperCase());
 }
 
+
 fs.writeFileSync(outputPath, JSON.stringify(result, null, 2));
 console.log("✅ Pincodes grouped by post offices successfully");

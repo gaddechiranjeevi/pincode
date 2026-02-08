@@ -1,16 +1,18 @@
 import Link from "next/link";
 
 export default function Breadcrumbs({ items }) {
+  if (!items || items.length === 0) return null;
+
   return (
-    <nav className="breadcrumbs">
-      {items.map((item, i) => (
-        <span key={i}>
+    <nav aria-label="Breadcrumb" className="breadcrumbs">
+      {items.map((item, index) => (
+        <span key={index}>
+          {index > 0 && " › "}
           {item.href ? (
             <Link href={item.href}>{item.label}</Link>
           ) : (
             <span>{item.label}</span>
           )}
-          {i < items.length - 1 && " → "}
         </span>
       ))}
     </nav>
